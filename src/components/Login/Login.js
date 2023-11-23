@@ -7,10 +7,10 @@ const Login = () => {
     const passwordInputRef=useRef();
     
     const submitHandler=()=>{
-
+       setLogin((prev)=>!prev)
     }
     const switchHandler=()=>{
-
+        setLogin((prev)=>!prev)
     }
 
   return (
