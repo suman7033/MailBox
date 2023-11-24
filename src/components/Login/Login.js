@@ -1,16 +1,59 @@
-import { useRef,Link, useState } from 'react';
+import { useRef, useState } from 'react';
 import './login.css';
+import { useNavigate,Link } from 'react-router-dom';
 
 const Login = () => {
   const [login,setLogin]=useState();
+  const Navigate=useNavigate();
     const emailInputRef=useRef();
     const passwordInputRef=useRef();
-    
-    const submitHandler=()=>{
-       setLogin((prev)=>!prev)
-    }
     const switchHandler=()=>{
-        setLogin((prev)=>!prev)
+      setLogin((prev)=>!prev)
+  }
+    const submitHandler=(e)=>{
+       e.preventDefault();
+       const enteredEmail=emailInputRef.current.value;
+       const enteredPassword=passwordInputRef.current.value;
+       let url;
+       if(login){
+        url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBGBimefwh5OivbZHuzMo-I13cB6G1uEo0'
+       }else{
+        url='https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBGBimefwh5OivbZHuzMo-I13cB6G1uEo0'
+       }
+       fetch(url,{
+        method: 'POST',
+        body: JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+          returnSecureToken: true,
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+       })
+       .then((res)=>{
+         if(res.ok){
+          console.log("sucessful")
+          return res.json();
+         }else{
+          return res.json()
+          .then((data)=>{
+            let errorMessage='Authentication Failed'
+            throw new Error(errorMessage)
+          })
+         }
+       })
+       .then((data)=>{
+        alert("sucessful")
+        Navigate('/home')
+        localStorage.setItem("tokenId",data.idToken)
+        localStorage.setItem("email",data.email);
+        emailInputRef.current.value=''
+        passwordInputRef.current.value=''
+       })
+       .catch(err=>{
+        alert(err.message);
+       })
     }
 
   return (
