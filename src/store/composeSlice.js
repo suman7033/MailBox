@@ -4,6 +4,8 @@ const initialComposeState={
     message: [],
     showCompose: true,
     count: 0,
+    showEmail: true,
+    openMessage: null,
 }
 
 const composeSlice=createSlice({
@@ -29,6 +31,13 @@ const composeSlice=createSlice({
             const reqindex=state.message.findIndex((item)=>item.id===id);
             state.count=state.count-1;
             state.message.splice(reqindex,1);
+        },
+        ShowEmail(state,action){
+           state.showEmail=!state.showEmail
+        },
+        openMessage(state,action){
+            console.log("openMessage",action.payload);
+          state.openMessage=action.payload;
         }
 
     }

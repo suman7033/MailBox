@@ -4,6 +4,7 @@ const initialLoginState={
     showLogin: true,
     token: "",
     email: "",
+    
 };
 
 const loginSlice=createSlice({

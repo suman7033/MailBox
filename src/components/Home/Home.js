@@ -5,18 +5,21 @@ import './home.css'
 import EmailList from '../EmailList/EmailList'
 import Compose from '../Compose/Compose'
 import EmailDetails from '../EmailDetails/EmailDetails'
+import { useSelector } from 'react-redux'
 
 const Home = () => {
+  const showemail=useSelector((state)=>state.compose.showEmail)
   return (
       <div>
       <Header/><br/><br/><br/>
       <div className='side'>
       <Sidebar/>
       <div>
-        <EmailList/>
-      </div>
+        {showemail ? <EmailList/>:<EmailDetails/>}
+        </div>
         <Compose/>
-      </div>
+        </div>
+      {/* <div><EmailDetails/></div> */}
     </div>
   )
 }

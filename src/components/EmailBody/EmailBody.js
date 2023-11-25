@@ -28,8 +28,12 @@ const EmailBody = (props) => {
           alert('Failed to delete compose.please try again')
         }
     }
+    const EmailBodyHandler=()=>{
+       dispatch(composeAction.ShowEmail())
+       dispatch(composeAction.openMessage(props));
+    }
   return (
-    <div className='emailbody'>
+    <div className='emailbody' onClick={EmailBodyHandler}>
        <div className='emailbody_left'>
          <StarBorderIcon/>&nbsp;
          <h4>{props.name}</h4>

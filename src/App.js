@@ -8,12 +8,12 @@ import Login from './components/Login/Login'
 import Home from './components/Home/Home'
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import EmailDetails from "./components/EmailDetails/EmailDetails";
+//import EmailDetails from "./components/EmailDetails/EmailDetails";
 
 
 const App = () => {
   return (
-    <>
+    <div>
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login/>}></Route>
@@ -22,7 +22,7 @@ const App = () => {
       </Routes>
       </BrowserRouter>
       <ToastContainer/>
-    </>
+      </div>
   )
 }
 
