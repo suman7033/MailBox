@@ -4,10 +4,11 @@ import Sidebar from '../SideBar/sidebarIcon'
 import './home.css'
 import EmailList from '../EmailList/EmailList'
 import Compose from '../Compose/Compose'
+import EmailDetails from '../EmailDetails/EmailDetails'
 
 const Home = () => {
   return (
-    <div>
+      <div>
       <Header/><br/><br/><br/>
       <div className='side'>
       <Sidebar/>

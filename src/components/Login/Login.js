@@ -1,10 +1,13 @@
 import { useRef, useState } from 'react';
 import './login.css';
 import { useNavigate,Link } from 'react-router-dom';
-
+import { useDispatch,useSelector } from 'react-redux';
+import { loginAction } from '../../store/loginSlice';
+import { toast } from 'react-toastify';
 const Login = () => {
   const [login,setLogin]=useState();
   const Navigate=useNavigate();
+  const dispatch=useDispatch();
     const emailInputRef=useRef();
     const passwordInputRef=useRef();
     const switchHandler=()=>{
@@ -33,6 +36,10 @@ const Login = () => {
        })
        .then((res)=>{
          if(res.ok){
+          toast.success('sucessful login', {
+            position: 'top-center',
+            autoClose: 3000,
+          });
           console.log("sucessful")
           return res.json();
          }else{
@@ -44,8 +51,8 @@ const Login = () => {
          }
        })
        .then((data)=>{
-        alert("sucessful")
         Navigate('/home')
+        dispatch(loginAction.login(data));
         localStorage.setItem("tokenId",data.idToken)
         localStorage.setItem("email",data.email);
         emailInputRef.current.value=''
