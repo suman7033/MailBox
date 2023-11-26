@@ -2,16 +2,24 @@ import { createSlice} from '@reduxjs/toolkit';
 
 const initialComposeState={
     message: [],
+    RecieveMessage: [],
     showCompose: true,
     count: 0,
+    RecieveCount: 0,
     showEmail: true,
     openMessage: null,
+    SentShow: false,
+    RecieveShow: true,
 }
 
 const composeSlice=createSlice({
     name: 'compose',
     initialState: initialComposeState,
     reducers: {
+        RecieveMessage(state,action){
+           state.RecieveMessage.push(action.payload);
+           state.RecieveCount=state.RecieveCount+1;
+        },
         setCompose(state,action){
             state.message=action.payload;
             const getCount=action.payload.length;
@@ -38,6 +46,13 @@ const composeSlice=createSlice({
         openMessage(state,action){
             console.log("openMessage",action.payload);
           state.openMessage=action.payload;
+        },
+        SentShowMessage(state,action){
+           state.SentShow=true;
+        },
+        RecieveShowMessage(state,action){
+            state.RecieveShow=true;
+            state.SentShow=false;
         }
 
     }

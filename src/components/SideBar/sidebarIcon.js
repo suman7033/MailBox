@@ -18,6 +18,7 @@ import {toast} from 'react-toastify'
 
 const SidebarIcon = () => {
   const count=useSelector((state)=>state.compose.count)
+  const RecieveCount=useSelector((state)=>state.compose.RecieveCount)
   
    const dispatch=useDispatch();  
   const composeHandler=()=>{
@@ -33,18 +34,25 @@ const SidebarIcon = () => {
       autoClose: 3000,
     });
   }
+  const SentShowHandler=()=>{
+      //alert("sent Message");
+      dispatch(composeAction.SentShowMessage())
+  }
+  const RecieveShowHandler=()=>{
+     dispatch(composeAction.RecieveShowMessage());
+  }
   return (
      <div className='sidebar'>
        <Button startIcon={<ControlPointIcon/>} className='compose_btn' onClick={composeHandler}>Compose</Button><br/><br/>
        
-       <SideBarOption Icon={MailIcon} title='Inbox' number={count} isactive={true}/>
-
+       <div onClick={RecieveShowHandler}><SideBarOption Icon={MailIcon} title='Inbox' number={RecieveCount} isactive={true}/>
+       </div>
        <SideBarOption Icon={StarBorderIcon} title='Starred' number='234'/>
 
        <SideBarOption Icon={AccessTimeFilledIcon} title='Snoozed' number='234'/>
 
-       <SideBarOption Icon={SendIcon} title='Sent' number={count} isactive={true}/>
-
+       <div onClick={SentShowHandler}><SideBarOption Icon={SendIcon} title='Sent' number={count} isactive={true} onClick={SentShowHandler}/>
+       </div>
        <SideBarOption Icon={DraftsIcon} title='Drafts' number='234'/>
 
        <SideBarOption Icon={DeleteForeverIcon} title='Trash' number='234'/>

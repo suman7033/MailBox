@@ -4,6 +4,7 @@ import { useNavigate,Link } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { loginAction } from '../../store/loginSlice';
 import { toast } from 'react-toastify';
+import { composeAction } from '../../store/composeSlice';
 const Login = () => {
   const [login,setLogin]=useState();
   const Navigate=useNavigate();
@@ -51,12 +52,14 @@ const Login = () => {
          }
        })
        .then((data)=>{
-        Navigate('/home')
         dispatch(loginAction.login(data));
+        dispatch(loginAction.showLogin());
+        dispatch(composeAction.Showcompose());
         localStorage.setItem("tokenId",data.idToken)
         localStorage.setItem("email",data.email);
         emailInputRef.current.value=''
         passwordInputRef.current.value=''
+        Navigate('/home')
        })
        .catch(err=>{
         alert(err.message);

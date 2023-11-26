@@ -23,6 +23,7 @@ const EmailBody = (props) => {
             throw new Error('Failed to delete compose.')
           }
           dispatch(composeAction.deleteCompose(props))
+          dispatch(composeAction.ShowEmail())
         }catch(error){
           console.log(error)
           alert('Failed to delete compose.please try again')
@@ -33,6 +34,7 @@ const EmailBody = (props) => {
        dispatch(composeAction.openMessage(props));
     }
   return (
+    <>
     <div className='emailbody' onClick={EmailBodyHandler}>
        <div className='emailbody_left'>
          <StarBorderIcon/>&nbsp;
@@ -51,6 +53,7 @@ const EmailBody = (props) => {
          <DeleteIcon onClick={()=>deleteEmail(props)}/>
        </div>
     </div>
+    </>
   )
 }
 

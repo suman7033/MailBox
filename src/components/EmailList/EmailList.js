@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux'
 
 const EmailList = () => {
   const message=useSelector((state)=>state.compose.message)
+  const RecieveMessage=useSelector((state)=>state.compose.RecieveMessage)
+  const SentShow=useSelector((state)=>state.compose.SentShow)
+  const RecieveShow=useSelector((state)=>state.compose.RecieveShow);
   console.log("EmailListMessage",message);
   return (
     <>
@@ -18,9 +21,17 @@ const EmailList = () => {
     <IconButton>
     <EmailType/>
     </IconButton>
+    { RecieveShow && <div>
+    {RecieveMessage.map((message)=>(
+       <EmailBody id={message.id} name={message.reciept} subject={message.subject} message={message.textarea} time='02:30 PM'/>
+    ))}
+    </div>}
+
+    {SentShow && <div>
     {message.map((message)=>(
        <EmailBody id={message.id} name={message.reciept} subject={message.subject} message={message.textarea} time='03:20'/>
     ))}
+    </div>}
     {/* <EmailBody name={composeValue.reciept} subject={composeValue.subject} message={composeValue.textarea} time='03:20'/> */}
     </>
   )

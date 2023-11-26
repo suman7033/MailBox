@@ -21,6 +21,7 @@ const Compose = () => {
    const dispatch=useDispatch();
    const show=useSelector((state)=> state.compose.showCompose)
    //const email=useSelector((state)=>state.login.email)
+
    const email=localStorage.getItem("email")
    const ChangeEmail=email.replace(/[@.]/g,'')
    
