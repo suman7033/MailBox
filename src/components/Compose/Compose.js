@@ -72,7 +72,7 @@ const Compose = () => {
        };
        try{
          console.log("sendEmail",ChangeEmail);
-         const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/sender/${ChangeEmail}.json`,{
+         const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/RecieveEmail/ke9k95d9D8YQn0LjP8aX.json`,{
             method: 'POST',
             body: JSON.stringify(composeValue),
             headers: {

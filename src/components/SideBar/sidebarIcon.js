@@ -60,7 +60,7 @@ const SidebarIcon = () => {
        <SideBarOption Icon={DraftsIcon} title='Drafts' number='234'/>
 
        <SideBarOption Icon={DeleteForeverIcon} title='Trash' number='234'/>
-       <button className='logoutBtn' onClick={logoutHandler}><Link to='/'>Logout</Link></button>
+       <button className='logoutBtn' onClick={logoutHandler}><Link to='/'><b className='logout_Btn'>Logout</b></Link></button>
      </div>
   )
 }

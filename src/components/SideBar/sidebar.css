@@ -19,8 +19,16 @@
   border-radius: 10px;
   color: black;
   background-color: gray;
+  
 }
 .sent_btn{
    display: flex;
    background-color: red;
+}
+.logout_Btn{
+  font-size: 18px;
+  color: black;
+}
+.logoutBtn:hover{
+   background-color: rgb(245, 65, 65);
 }
