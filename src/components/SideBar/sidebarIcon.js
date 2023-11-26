@@ -29,6 +29,10 @@ const SidebarIcon = () => {
     dispatch(composeAction.Showcompose())
   }
   const logoutHandler=()=>{
+    localStorage.removeItem("tokenId")
+    localStorage.removeItem("email")
+    localStorage.removeItem("showLogin");
+    
     toast.error('Logout Sucessful', {
       position: 'top-center',
       autoClose: 3000,

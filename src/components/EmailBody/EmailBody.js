@@ -53,6 +53,7 @@ const EmailBody = (props) => {
          <DeleteIcon onClick={()=>deleteEmail(props)}/>
        </div>
     </div>
+    <br/>
     </>
   )
 }
