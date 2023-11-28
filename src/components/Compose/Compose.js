@@ -55,10 +55,10 @@ const Compose = () => {
          console.log(error);
       }
    }
-   //
+    
    const fetchRecieve=async ()=>{
       try{
-         const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/users/${RecieveEmail}/Recieved.json`)
+         const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/users/${ChangeEmail}/Recieved.json`)
          if(!response.ok){
             throw new Error('Failed to fetch compose.')
          }
@@ -78,11 +78,19 @@ const Compose = () => {
          console.log(error);
       }
    }
+ 
    useEffect(()=>{
-      fetchCompose();
-      fetchRecieve();
-      dispatch(composeAction.Showcompose());
-   },[ChangeEmail]);
+      const fetchData=async ()=>{
+         try{
+            await fetchCompose();
+            await fetchRecieve();
+            dispatch(composeAction.Showcompose());
+         }catch (error){
+            console.log(error);
+         }
+      }
+      fetchData();
+   },[ChangeEmail,RecieveEmail])
 
    const ClearHandler=()=>{
       toast.error('Remove Compose Box', {
@@ -99,7 +107,6 @@ const Compose = () => {
        };
        const ChangeReciept=composeValue.reciept.replace(/[@.]/g,'');
        try{
-         console.log("sendEmail",ChangeEmail);
          const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/users/${ChangeReciept}/Recieved.json`,{
             method: 'POST',
             body: JSON.stringify(composeValue),
@@ -112,9 +119,7 @@ const Compose = () => {
          }
          const data=await response.json();
          const updateSendValue={...composeValue,id: data.name}
-         //console.log("sendValue",updateSendValue);
-         //dispatch(composeAction.sendMessage(updateSendValue))
-         //dispatch(composeAction.Showcompose());
+         console.log("RecieveValue",updateSendValue);
          alert("sent sucessful");
          toast.success('send sucessful', {
             position: 'top-center',
@@ -144,8 +149,7 @@ const Compose = () => {
          const updateSendValue={...composeValue,id: data.name}
          console.log("sendValue",updateSendValue);
          dispatch(composeAction.sendMessage(updateSendValue))
-         dispatch(composeAction.Showcompose());
-         alert("sentd")
+         //dispatch(composeAction.Showcompose());
          toast.success('send sucessful', {
             position: 'top-center',
             autoClose: 3000,
@@ -158,6 +162,7 @@ const Compose = () => {
        subjectInputRef.current.value='';
        textareaInputRef.current.value='';
    }
+   
   return (
    <>
     {show && <div className='compose'>

@@ -1,17 +1,21 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
+import { composeAction } from '../../store/composeSlice';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-const RecieveEmailBody = () => {
-
+const RecieveEmailBody = (props) => {
+   console.log("props",props);
     const dispatch=useDispatch()
   const email=localStorage.getItem("email");
   //const email=useSelector((state)=>state.login.email);
   const ChangeEmail=email.replace(/[@.]/g,'')
     const deleteEmail=async()=>{
         try{
-          console.log("Delete",props);
+          console.log("RecievedDelete",props);
+          alert("Recieved Delete")
           const response=await fetch(
-            `https://mailbox-b5387-default-rtdb.firebaseio.com/sender/${ChangeEmail}/${props.id}.json`,
+            `https://mailbox-b5387-default-rtdb.firebaseio.com/users/${ChangeEmail}/Recieved/${props.id}.json`,
             {
               method: 'DELETE',
             }
@@ -19,7 +23,7 @@ const RecieveEmailBody = () => {
           if(!response.ok){
             throw new Error('Failed to delete compose.')
           }
-          dispatch(composeAction.deleteCompose(props))
+          //dispatch(composeAction.deleteCompose(props))
           dispatch(composeAction.ShowEmail())
         }catch(error){
           console.log(error)

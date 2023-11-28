@@ -18,14 +18,15 @@ const composeSlice=createSlice({
     initialState: initialComposeState,
     reducers: {
         RecieveMessage(state,action){
-           state.RecieveMessage.push(action.payload);
-           state.RecieveCount=state.RecieveCount+1;
+           state.RecieveMessage.push(...action.payload);
+           console.log("RecieveMessage",action.payload);
+           state.RecieveCount=action.payload.length;
+           state.RecieveShow=true;
         },
         setCompose(state,action){
             state.message=action.payload;
             const getCount=action.payload.length;
-            //const getCount=action.payload.reduce((count,message)=> count+parseFloat(message.count),0)
-            state.count=getCount;
+             state.count=getCount;
         },
         Showcompose(state,action){
             state.showCompose=!state.showCompose;
@@ -35,7 +36,7 @@ const composeSlice=createSlice({
            state.message.push(action.payload);
            state.sendEmail=action.payload.reciept;
            console.log("sendEmail",action.payload.reciept);
-           state.count=state.count+1;
+           state.count=action.payload.length;
         },
         deleteCompose(state,action){
             const id=action.payload.id;
@@ -52,6 +53,7 @@ const composeSlice=createSlice({
         },
         SentShowMessage(state,action){
            state.SentShow=true;
+           state.RecieveShow=false;
         },
         RecieveShowMessage(state,action){
             state.RecieveShow=true;

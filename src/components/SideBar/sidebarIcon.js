@@ -39,7 +39,13 @@ const SidebarIcon = () => {
     });
   }
   const SentShowHandler=()=>{
-      //alert("sent Message");
+    //  if(count === 0){
+    //   return (
+    //     <div>
+    //     <h1>sent box empty</h1>
+    //     </div>
+    //   )
+    //  }
       dispatch(composeAction.SentShowMessage())
   }
   const RecieveShowHandler=()=>{
@@ -55,7 +61,7 @@ const SidebarIcon = () => {
 
        <SideBarOption Icon={AccessTimeFilledIcon} title='Snoozed' number='234'/>
 
-       <div onClick={SentShowHandler}><SideBarOption Icon={SendIcon} title='Sent' number={count} isactive={true} onClick={SentShowHandler}/>
+       <div onClick={SentShowHandler}><SideBarOption Icon={SendIcon} title='Sent' number={count} isactive={true}/>
        </div>
        <SideBarOption Icon={DraftsIcon} title='Drafts' number='234'/>
 

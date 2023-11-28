@@ -14,7 +14,7 @@ const EmailBody = (props) => {
         try{
           console.log("Delete",props);
           const response=await fetch(
-            `https://mailbox-b5387-default-rtdb.firebaseio.com/sender/${ChangeEmail}/${props.id}.json`,
+            `https://mailbox-b5387-default-rtdb.firebaseio.com/users/${ChangeEmail}/sent/${props.id}.json`,
             {
               method: 'DELETE',
             }

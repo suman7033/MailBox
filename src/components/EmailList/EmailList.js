@@ -5,6 +5,7 @@ import EmailType from '../EmailType/EmailType'
 import { IconButton } from '@mui/material'
 import EmailBody from '../EmailBody/EmailBody'
 import { useSelector } from 'react-redux'
+import RecieveEmailBody from '../EmailBody/RecieveEmailBody'
 
 const EmailList = () => {
   const message=useSelector((state)=>state.compose.message)
@@ -12,6 +13,7 @@ const EmailList = () => {
   const SentShow=useSelector((state)=>state.compose.SentShow)
   const RecieveShow=useSelector((state)=>state.compose.RecieveShow);
   console.log("EmailListMessage",message);
+  console.log("RecieveValue",RecieveMessage);
   return (
     <>
     <div className='emailList'>
@@ -23,7 +25,7 @@ const EmailList = () => {
     </IconButton>
     { RecieveShow && <div>
     {RecieveMessage.map((message)=>(
-       <EmailBody id={message.id} name={message.reciept} subject={message.subject} message={message.textarea} time='02:30 PM'/>
+       <RecieveEmailBody id={message.id} name={message.reciept} subject={message.subject} message={message.textarea} time='02:30 PM'/>
     ))}
     </div>}
 
