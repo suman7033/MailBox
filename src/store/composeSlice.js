@@ -9,7 +9,8 @@ const initialComposeState={
     showEmail: true,
     openMessage: null,
     SentShow: false,
-    RecieveShow: true,
+    RecieveShow: false,
+    sendEmail: '',
 }
 
 const composeSlice=createSlice({
@@ -30,8 +31,10 @@ const composeSlice=createSlice({
             state.showCompose=!state.showCompose;
         },
         sendMessage(state,action){
-           console.log("sendSlice",action.payload)
+           //console.log("sendSlice",action.payload)
            state.message.push(action.payload);
+           state.sendEmail=action.payload.reciept;
+           console.log("sendEmail",action.payload.reciept);
            state.count=state.count+1;
         },
         deleteCompose(state,action){

@@ -21,6 +21,9 @@ const Compose = () => {
    const dispatch=useDispatch();
    const show=useSelector((state)=> state.compose.showCompose)
    //const email=useSelector((state)=>state.login.email)
+   const RecieptValue=useSelector((state)=>state.compose.sendEmail);
+   const RecieveEmail=RecieptValue.replace(/[@.]/g,'');
+   console.log("r",RecieveEmail);
 
    const email=localStorage.getItem("email")
    const ChangeEmail=email.replace(/[@.]/g,'')
@@ -29,15 +32,15 @@ const Compose = () => {
    const subjectInputRef=useRef();
    const textareaInputRef=useRef();
 
+
    const fetchCompose=async ()=>{
       try{
-         const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/sender/${ChangeEmail}.json`)
+         const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/users/${ChangeEmail}/sent.json`)
          if(!response.ok){
             throw new Error('Failed to fetch compose.')
          }
          const data=await response.json();
          const loadedMessage=[];
-         let count=0;
          for(const key in data){
             const currentMessage={
                id: key,
@@ -47,13 +50,37 @@ const Compose = () => {
             }
             loadedMessage.push(currentMessage);
          }
-         dispatch(composeAction.setCompose(loadedMessage,count));
+         dispatch(composeAction.setCompose(loadedMessage));
+      } catch (error){
+         console.log(error);
+      }
+   }
+   //
+   const fetchRecieve=async ()=>{
+      try{
+         const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/users/${RecieveEmail}/Recieved.json`)
+         if(!response.ok){
+            throw new Error('Failed to fetch compose.')
+         }
+         const data=await response.json();
+         const loadedMessage=[];
+         for(const key in data){
+            const currentMessage={
+               id: key,
+               reciept: data[key].reciept,
+               subject: data[key].subject,
+               textarea: data[key].textarea,
+            }
+            loadedMessage.push(currentMessage);
+         }
+         dispatch(composeAction.RecieveMessage(loadedMessage));
       } catch (error){
          console.log(error);
       }
    }
    useEffect(()=>{
-      fetchCompose()
+      fetchCompose();
+      fetchRecieve();
       dispatch(composeAction.Showcompose());
    },[ChangeEmail]);
 
@@ -70,9 +97,40 @@ const Compose = () => {
           subject: subjectInputRef.current.value,
           textarea: textareaInputRef.current.value,
        };
+       const ChangeReciept=composeValue.reciept.replace(/[@.]/g,'');
        try{
          console.log("sendEmail",ChangeEmail);
-         const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/RecieveEmail/ke9k95d9D8YQn0LjP8aX.json`,{
+         const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/users/${ChangeReciept}/Recieved.json`,{
+            method: 'POST',
+            body: JSON.stringify(composeValue),
+            headers: {
+               'Content-Type': 'application/json',
+            },            
+         });
+         if(!response.ok){
+            throw new Error('Failed to send.');
+         }
+         const data=await response.json();
+         const updateSendValue={...composeValue,id: data.name}
+         //console.log("sendValue",updateSendValue);
+         //dispatch(composeAction.sendMessage(updateSendValue))
+         //dispatch(composeAction.Showcompose());
+         alert("sent sucessful");
+         toast.success('send sucessful', {
+            position: 'top-center',
+            autoClose: 3000,
+          });
+       } catch (error){
+         console.error(error);
+         alert("Failed to send value. try again.")
+       }
+       reciepentInputRef.current.value='';
+       subjectInputRef.current.value='';
+       textareaInputRef.current.value='';
+       //
+       try{
+         console.log("sendEmail",ChangeEmail);
+         const response=await fetch(`https://mailbox-b5387-default-rtdb.firebaseio.com/users/${ChangeEmail}/sent.json`,{
             method: 'POST',
             body: JSON.stringify(composeValue),
             headers: {
@@ -87,6 +145,7 @@ const Compose = () => {
          console.log("sendValue",updateSendValue);
          dispatch(composeAction.sendMessage(updateSendValue))
          dispatch(composeAction.Showcompose());
+         alert("sentd")
          toast.success('send sucessful', {
             position: 'top-center',
             autoClose: 3000,
