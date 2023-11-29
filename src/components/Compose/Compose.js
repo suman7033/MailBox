@@ -73,24 +73,37 @@ const Compose = () => {
             }
             loadedMessage.push(currentMessage);
          }
-         dispatch(composeAction.RecieveMessage(loadedMessage));
+         dispatch(composeAction.setRecieve(loadedMessage));
       } catch (error){
          console.log(error);
       }
    }
  
-   useEffect(()=>{
-      const fetchData=async ()=>{
-         try{
-            await fetchCompose();
-            await fetchRecieve();
-            dispatch(composeAction.Showcompose());
-         }catch (error){
-            console.log(error);
-         }
-      }
-      fetchData();
-   },[ChangeEmail,RecieveEmail])
+   // useEffect(()=>{
+   //    const fetchData=async ()=>{
+   //       try{
+   //          await fetchCompose();
+   //           await fetchRecieve();
+   //          dispatch(composeAction.Showcompose());
+   //       }catch (error){
+   //          console.log(error);
+   //       }
+   //    }
+   //    fetchData();
+   // },[ChangeEmail,RecieveEmail])
+
+   useEffect(() => {
+      setInterval(() => {
+        fetchCompose();
+      }, 5000);
+      setInterval(() => {
+        fetchRecieve();
+      }, 5000);
+      
+      dispatch(composeAction.Showcompose());
+    }, [ChangeEmail]);
+
+ 
 
    const ClearHandler=()=>{
       toast.error('Remove Compose Box', {
@@ -162,7 +175,7 @@ const Compose = () => {
        subjectInputRef.current.value='';
        textareaInputRef.current.value='';
    }
-   
+
   return (
    <>
     {show && <div className='compose'>

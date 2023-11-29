@@ -23,6 +23,11 @@ const composeSlice=createSlice({
            state.RecieveCount=action.payload.length;
            state.RecieveShow=true;
         },
+        setRecieve(state,action){
+           state.RecieveMessage=action.payload;
+           const ReCount=action.payload.length;
+           state.RecieveCount=ReCount;
+        },
         setCompose(state,action){
             state.message=action.payload;
             const getCount=action.payload.length;
@@ -43,6 +48,12 @@ const composeSlice=createSlice({
             const reqindex=state.message.findIndex((item)=>item.id===id);
             state.count=state.count-1;
             state.message.splice(reqindex,1);
+        },
+        deleteRecieveCompose(state,action){
+           const id=action.payload.id;
+           const reqindex=state.RecieveMessage.findIndex((item)=>item.id);
+           state.RecieveCount=state.RecieveCount-1;
+           state.RecieveMessage.splice(reqindex,1);
         },
         ShowEmail(state,action){
            state.showEmail=!state.showEmail

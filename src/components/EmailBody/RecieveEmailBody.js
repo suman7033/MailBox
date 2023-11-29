@@ -23,8 +23,9 @@ const RecieveEmailBody = (props) => {
           if(!response.ok){
             throw new Error('Failed to delete compose.')
           }
-          //dispatch(composeAction.deleteCompose(props))
+          dispatch(composeAction.deleteRecieveCompose(props))
           dispatch(composeAction.ShowEmail())
+
         }catch(error){
           console.log(error)
           alert('Failed to delete compose.please try again')
